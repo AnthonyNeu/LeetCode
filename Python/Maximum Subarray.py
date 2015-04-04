@@ -14,3 +14,18 @@ class Solution:
             maxEnd = max(maxEnd+A[i],A[i])
             maxSum = max(maxSum,maxEnd)
         return maxSum
+
+
+# Greedy Algorithm
+class Solution:
+    # @param A, a list of integers
+    # @return an integer
+    def maxSubArray(self, A):
+        Max = A[0]
+        current = 0
+        
+        for num in A:
+            current += num
+            Max = max(Max,current)
+            current = max(0,current)
+        return Max

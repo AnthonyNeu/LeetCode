@@ -7,6 +7,9 @@ top() -- Get the top element.
 getMin() -- Retrieve the minimum element in the stack.
 """
 
+
+# O(n) Time
+# O(1) Space
 class MinStack:
     def __init__(self):
         self.min = None
@@ -40,3 +43,35 @@ class MinStack:
     # @return an integer
     def getMin(self):
         return self.min
+
+#O(n) time
+#O(n) space
+class MinStack:
+    def __init__(self):
+        self.min = []
+        self.stack = []
+        
+    # @param x, an integer
+    # @return an integer
+    def push(self, x):
+        if not self.stack:
+            self.stack.append(x)
+            self.min.append(x) 
+        else:
+            self.stack.append(x)
+            if x <= self.min[-1]:
+                self.min.append(x)
+
+    # @return nothing
+    def pop(self):
+        x = self.stack.pop()
+        if x == self.min[-1]:
+            self.min.pop()
+
+    # @return an integer
+    def top(self):
+        return self.stack[-1]
+        
+    # @return an integer
+    def getMin(self):
+        return self.min[-1]

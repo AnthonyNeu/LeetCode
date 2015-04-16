@@ -73,4 +73,4 @@ class Solution:
                 prev.end = max(prev.end, current.end)
             else:
                 result.append(current)
-        return result
+        return result	

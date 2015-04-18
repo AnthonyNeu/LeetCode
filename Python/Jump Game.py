@@ -32,3 +32,18 @@ class Solution:
                     start = idx
             idx = idx + 1
         return True
+
+class Solution:
+    # @param nums, an integer[]
+    # @return a boolean
+    def canJump(self, nums):
+        last = 0
+        curr = 0
+        for i in range(len(nums)):
+            if i > last:
+                # if not last one and can't go further
+                if (curr == last) and (last < len(nums)-1):
+                    return False   # never reach the last one
+                last = curr
+            curr = max(curr, i+nums[i])
+        return True

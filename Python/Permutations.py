@@ -27,3 +27,19 @@ class Solution:
                 self.permuteRe(result,used,current,num)
                 current.pop()
                 used[i] = False
+
+
+class Solution:
+    # @param num, a list of integer
+    # @return a list of lists of integers
+    def permute(self, num):
+        solutions = [[]]
+        
+        for number in num:
+            next = []
+            for solution in solutions:
+                for i in xrange(len(solution)+1):
+                    candidate = solution[:i] + [number] + solution[i:]
+                    next.append(candidate)
+            solutions = next
+        return solutions

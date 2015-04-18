@@ -29,3 +29,17 @@ class Solution:
                 
         num[k], num[l] = num[l], num[k]
         return num[:k + 1] + num[:k:-1]
+
+
+class Solution:
+    # @param num, a list of integer
+    # @return nothing (void), do not return anything, modify num in-place instead.
+    def nextPermutation(self, num):
+        for i in range(len(num) - 2, -1, -1):
+            for j in range(len(num) - 1, i, -1):
+                if num[i] < num[j]:
+                    num[i], num[j] = num[j], num[i]
+                    num[i+1:] = num[i+1:][::-1]
+                    return
+
+        num.reverse()

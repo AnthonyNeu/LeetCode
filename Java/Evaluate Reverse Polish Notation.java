@@ -37,7 +37,7 @@ public class Solution {
 }
 
 
-//A more clean way use interface
+//A cleaner way use interface
 public class Solution {
     interface Operator {
         int eval(int x, int y);

@@ -18,7 +18,7 @@ public class Solution {
             if(nums[mid] == target)
                 return mid;
             if(nums[left] <= nums[mid]){
-                if(nums[mid] >= target && nums[left] <= target)
+                if(nums[mid] > target && nums[left] <= target)
                     right = mid;
                 else
                     left = mid + 1;

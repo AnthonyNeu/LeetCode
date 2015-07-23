@@ -4,29 +4,38 @@ Note:
 Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
 */
 
-int singleNumber(int A[], int n) {
-    int count[32] = {0};
-    int result = 0;
-    for (int i = 0; i < 32; i++) {
-        for (int j = 0; j < n; j++) {
-            if ((A[j] >> i) & 1) {
-                count[i]++;
+
+public class Solution {
+    public int singleNumber(int[] nums) {
+        final int W = Integer.SIZE;
+        int[] count = new int[W];
+        
+        for(int i = 0 ; i < nums.length ; i++){
+            for(int j = 0 ; j < W ; j ++){
+                count[j] += (nums[i] >> j) & 1;
+                count[j] %= 3;
             }
-		}
-    	result |= ((count[i] % 3) << i);
+        }
+        
+        int result = 0;
+        for(int i = 0 ; i < W ; i ++){
+            result += (count[i] << i);
+        }
+        return result;
     }
-    return result;
 }
 
-int singleNumber(int A[], int n) {
-    int ones = 0, twos = 0, threes = 0;
-    for (int i = 0; i < n; i++) {
-        twos |= ones & A[i];
-        ones ^= A[i];
-        threes = ones & twos;
-        ones &= ~threes;
-        twos &= ~threes;
-	}
-    return ones;
-}
 
+public class Solution {
+    public int singleNumber(int[] nums) {
+        int one = 0, two = 0, three = 0;
+        for(int i = 0;i < nums.length;i++){
+            two |= one & nums[i];
+            one ^= nums[i];
+            three = one&two;
+            two &= ~three;
+            one &= ~three;
+        }
+        return one;
+    }
+}

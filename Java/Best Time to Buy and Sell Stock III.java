@@ -30,6 +30,7 @@ public class Solution {
         for (int i = prices.length - 2; i >= 0; i--) {
             max = Math.max(prices[i], max);
             right[i] = Math.max(right[i + 1], max - prices[i]);
+            //or right[i] = max - prices[i]
         }
 
         int profit = 0;

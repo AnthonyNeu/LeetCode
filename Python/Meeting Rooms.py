@@ -18,7 +18,6 @@ class Solution(object):
         :type intervals: List[Interval]
         :rtype: bool
         """
-        flag = False
         intervals.sort(key=lambda x: x.start)
         
         for i in range(1, len(intervals)):

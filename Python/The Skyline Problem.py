@@ -99,3 +99,50 @@ class Solution:
                 merged.append(b)
                 b_idx += 1
         return a_idx, b_idx
+
+# heap solution
+import heapq
+from collections import defaultdict
+
+class Building(object):
+    def __init__(self, h):
+        self.h = h
+        self.deleted = False
+
+    def __cmp__(self, other):
+        # max-heap
+        return other.h - self.h
+
+class Event(object):
+    def __init__(self):
+        """
+        Event at certain x-coordinate
+        Event for the building starting and the building ending
+        """
+        self.starts = []
+        self.ends = []
+
+class Solution2(object):
+    def getSkyline(self, buildings):
+        """
+        :type buildings: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        events_dict = defaultdict(Event)
+        for start, end, height in buildings:
+            building = Building(height)
+            events_dict[start].starts.append(building)
+            events_dict[end].ends.append(building)
+        result, cur_heap, cur_max_height = [], [], 0
+        for x, event in sorted(events_dict.items()):
+            for building in event.starts:
+                heapq.heappush(cur_heap, building)
+            for building in event.ends:
+                building.deleted = True
+            while cur_heap and cur_heap[0].deleted:
+                heapq.heappop(cur_heap)
+            new_height = cur_heap[0].h if cur_heap else 0
+            if cur_max_height != new_height:
+                result.append([x, new_height])
+                cur_max_height = new_height
+        return result

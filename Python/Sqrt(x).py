@@ -3,7 +3,7 @@ Implement int sqrt(int x).
 Compute and return the square root of x.
 """
 
-class Solution:
+class Solution1:
     # @param x, an integer
     # @return an integer
     def sqrt(self, x):
@@ -22,3 +22,15 @@ class Solution:
             return start -1
         else:
             return start
+
+# Newton's method, works for double input
+class Solution2(object):
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        r = x
+        while r*r > x:
+            r = (r + x/r) / 2
+        return r

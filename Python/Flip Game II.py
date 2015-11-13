@@ -79,4 +79,40 @@ class Solution4(object):
         # re.findall: O(n) time, canWinHelper: O(c) in depth
         # re.findall find all the consecutive '+..+' in the s
         return canWinHelper(map(len, re.findall(r'\+\++', s)))
-             
+
+# speed up my solution using dictionary
+class Solution(object):
+    _memo = {}
+    def canWin(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        return self.dfs(s)
+
+    def dfs(self, s):
+        next_moves = self.generatePossibleNextMoves(s)
+
+        if len(next_moves) == 0:
+            return False
+        else:
+            for move in next_moves:
+                if move in self._memo and self._memo[move] is False:
+                    return True
+                if not self.dfs(move):
+                    self._memo[move] = False
+                    return True
+            return False
+
+    def generatePossibleNextMoves(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        if not s or len(s) == 0:
+            return []
+        result = []
+        for i in range(1, len(s)):
+            if s[i] == s[i- 1] == "+":
+                result.append(s[:i - 1] + "--" + s[i + 1:])
+        return result

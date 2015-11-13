@@ -34,4 +34,3 @@ class Solution:
         r = max(0,self.maxPathSumHelper(root.right,self.Max))
         self.Max = max(self.Max,l+r+root.val)
         return root.val + max(l,r)
-

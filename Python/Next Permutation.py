@@ -11,24 +11,24 @@ Here are some examples. Inputs are in the left-hand column and its corresponding
 1,1,5 → 1,5,1
 """
 
-class Solution:
-    # @param num, a list of integer
-    # @return a list of integer
-    def nextPermutation(self, num):
+class Solution(object):
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
         k, l = -1, 0
-        for i in xrange(len(num) - 1):
-            if num[i] < num[i + 1]:
+        for i in xrange(len(nums) - 1):
+            if nums[i] < nums[i + 1]:
                 k = i
-                
         if k == -1:
-            return num[::-1]
-        
-        for i in xrange(len(num)):
-            if num[i] > num[k]:
-                l = i
-                
-        num[k], num[l] = num[l], num[k]
-        return num[:k + 1] + num[:k:-1]
+            nums.reverse()
+        else:
+            for i in range(k + 1, len(nums)):
+                if nums[i] > nums[k]:
+                    l = i
+            nums[k], nums[l] = nums[l], nums[k]
+            nums[k + 1:] = nums[:k:-1]
 
 
 class Solution:

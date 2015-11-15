@@ -16,7 +16,7 @@ For now, the judge is able to judge based on one instance of gray code sequence.
 """
 Suppose we have already solved the problem for n-1 as input. We only need to add 1 to the MSB of the answer of n-1. We use the middle(in this example, it is 5) as the axis of symmetry.
 """
-class Solution:
+class Solution1:
     # @return a list of integers
     def grayCode(self, n):
         self.res = [0]
@@ -24,3 +24,19 @@ class Solution:
             self.res.append(self.res[-1] + i)
             self.res.extend([i + v for v in self.res[-3::-1]])
         return self.res
+
+class Solution2(object):
+    def grayCode(self, n):
+        """
+        :type n: int
+        :rtype: List[int]
+        """
+        if n <= 1:
+            return [i for i in range(n + 1)]
+        result = self.grayCode(n - 1)
+        temp = list(result[::-1])
+        x = 1 << (n - 1)
+        for i in range(len(temp)):
+            temp[i] += x
+        result = result + temp
+        return result

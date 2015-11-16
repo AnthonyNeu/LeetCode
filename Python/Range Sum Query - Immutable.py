@@ -38,6 +38,7 @@ class SegmentTreeNode(object):
         self.start, self.end, self.sum = start, end, None
         self.left, self.right = None, None
 
+# segment tree
 class NumArray(object):
     def __init__(self, nums):
         """
@@ -86,6 +87,49 @@ class NumArray(object):
             else:
                 right_sum = self.query(root.right, start, end)
         return left_sum + right_sum
+
+# binary indexed tree
+class NumArray(object):
+    def __init__(self, nums):
+        """
+        initialize your data structure here.
+        :type nums: List[int]
+        """
+        self.n = len(nums)
+        self.BITree= [0] * (self.n + 1)
+        for i in range(self.n):
+            self._update_BIT(i, nums[i])
+
+    def sumRange(self, i, j):
+        """
+        sum of elements nums[i..j], inclusive.
+        :type i: int
+        :type j: int
+        :rtype: int
+        """
+        return self._get_sum(j) - self._get_sum(i - 1)
+
+    def _update_BIT(self, index, val):
+        # index in BIT is one more than original nums
+        index += 1
+        # traverse all the ancestors of BITree[index]
+        while index <= self.n:
+            # add 'val' to current node of BI Tree
+            self.BITree[index] += val
+            # update index to its parent
+            index += index & (-index)
+        
+    def _get_sum(self, index):
+        # index in BIT is one more than original nums
+        index += 1
+        result = 0
+        # traverse all the subtrees whose indexes are less than "index"
+        while index > 0:
+            # add current element of BITree to sum
+            result += self.BITree[index]
+            # update index to previous subtree
+            index -= index & (-index)
+        return result
 # Your NumArray object will be instantiated and called as such:
 # numArray = NumArray(nums)
 # numArray.sumRange(0, 1)

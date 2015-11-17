@@ -53,3 +53,37 @@ class Solution:
             q.append((i+1, j))
             q.append((i, j-1))
             q.append((i, j+1))
+
+# pre-processing the point, start BFS from these points
+class Solution(object):
+    def solve(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: void Do not return anything, modify board in-place instead.
+        """
+        if not board:
+            return
+        current = []
+        # only need to do bfs from the outer layer
+        for i in xrange(len(board)):
+            current.append((i, 0))
+            current.append((i, len(board[0]) - 1))
+        for i in xrange(len(board[0])):
+            current.append((0, i))
+            current.append((len(board) - 1, i))
+            
+        while current:
+            i, j = current.pop()
+            if board[i][j] in ['O', 'V']:
+                board[i][j] = 'V'
+                for x, y in [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]:
+                    if 0 <= x < len(board) and 0 <= y < len(board[0]) and board[x][y] == 'O':
+                        board[x][y] = 'V'
+                        current.append((x, y))
+                        
+        for i in xrange(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] != 'V':
+                    board[i][j] = 'X'
+                else:
+                    board[i][j] = 'O'

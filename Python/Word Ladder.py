@@ -41,3 +41,40 @@ class Solution:
                             dict.remove(condidate)
             length += 1
         return 0
+
+# 2 BFS
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        """
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: Set[str]
+        :rtype: int
+        """
+        if beginWord == endWord:
+            return 1
+        words1 = set([beginWord])
+        words2 = set([endWord])
+        # if beginWord in wordList:
+        #     wordList.remove(beginWord)
+        # if endWord in wordList:
+        #     wordList.remove(endWord)
+
+        def find_ladder(words1, words2, level):
+            if len(words1) == 0:
+                return 0
+            if len(words1) > len(words2):
+                return find_ladder(words2, words1, level)
+            words3 = set()
+            for word in words1:
+                for i in range(len(word)):
+                    for j in 'abcdefghijklmnopqrstuvwxyz':
+                        if word[i] != j:
+                            candidate = word[:i] + j + word[i + 1:]
+                            if candidate in words2:
+                                return level + 1
+                            if candidate in wordList:
+                                words3.add(candidate)
+                                wordList.remove(candidate)
+            return find_ladder(words3, words2, level+1)
+        return find_ladder(words1, words2, 1)

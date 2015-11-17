@@ -83,9 +83,9 @@ class Solution(object):
         directions = [[0, -1], [0, 1], [1, 0], [-1, 0]]
         count, uf, result = 0, union_find(m, n), []
         for position in positions:
-            count += 1
             x, y = position[0], position[1]
             if not island[x][y]:
+                count += 1
                 island[x][y] = True
                 for i in range(4):
                     nx, ny = x + directions[i][0], y + directions[i][1]

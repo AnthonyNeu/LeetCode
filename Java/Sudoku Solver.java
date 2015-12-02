@@ -38,7 +38,7 @@ public class Solution {
             if(i != x && board[i][y] == board[x][y]) return false;
         }
         
-        /* check the squre */
+        /* check the square */
         for(int i = 3 * (x / 3) ; i < 3 * (x / 3) + 3 ; i ++) {
             for(int j = 3 * (y / 3) ; j < 3 * (y / 3) + 3 ; j ++) {
                 if((i != x || j != y) && board[i][j] == board[x][y]) return false;

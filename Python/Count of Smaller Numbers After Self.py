@@ -78,3 +78,75 @@ class Solution(object):
         elif index >= mid + 1 and index <= root.end:
             self.modify(root.right, index, value)
         root.count = root.left.count + root.right.count
+
+# using binary indexed tree
+class Solution(object):
+    BITree = []
+    def countSmaller(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        length = len(nums)
+        sorted_nums = list(nums)
+        sorted_nums.sort()
+        """
+        find the insertion place for every element in the array
+        using the insertion place as the index to insert to BIT
+        """
+        move = [self.searchInsert(sorted_nums, nums[i]) + 1 for i in range(length)]
+        self.BITree = [0 for _ in range(length + 1)]
+        result = [0 for _ in range(length)]
+        for i in range(length - 1, -1, -1):
+            result[i] = self.query(move[i] - 1)
+            self.add(move[i], 1)
+        return result
+        
+    def add(self, idx, value):
+        i = idx
+        while i < len(self.BITree):
+            self.BITree[i] += value
+            i += i& (-i)
+    
+    def query(self, idx):
+        result, i = 0, idx
+        while i > 0:
+            result += self.BITree[i]
+            i -= i & (-i)
+        return result
+    
+    def searchInsert(self, A, target):
+        if A is None or len(A) == 0:
+            return 0
+        left, right = 0, len(A) - 1
+        while left < right:
+            mid = left + (right - left) / 2
+            if A[mid] == target:
+                return mid
+            elif A[mid] < target:
+                left = mid + 1
+            else:
+                right = mid
+        return left if target <= A[-1] else left + 1
+
+# https://leetcode.com/discuss/73256/mergesort-solution
+class Solution(object):
+    def countSmaller(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        def sort(enum):
+            half = len(enum) / 2
+            if half:
+                left, right = sort(enum[:half]), sort(enum[half:])
+                for i in range(len(enum) - 1, -1, -1):
+                    if not right or (left and left[-1][1] > right[-1][1]):
+                        smaller[left[-1][0]] += len(right)
+                        enum[i] = left.pop()
+                    else:
+                        enum[i] = right.pop()
+            return enum
+        smaller = [0] * len(nums)
+        sort(list(enumerate(nums)))
+        return smaller

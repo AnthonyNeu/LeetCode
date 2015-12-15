@@ -38,3 +38,20 @@ class Solution:
         for i in reversed(range(0,start+1)):
             s += chr(result[i] + ord('0'))
         return s
+
+class Solution(object):
+    def multiply(self, num1, num2):
+        """
+        :type num1: str
+        :type num2: str
+        :rtype: str
+        """
+        result = [0] * (len(num1) + len(num2))
+        for i, e1 in enumerate(reversed(num1)):
+            for j, e2 in enumerate(reversed(num2)):
+                result[i + j] += int(e1) * int(e2)
+                result[i + j + 1] += result[i + j] / 10
+                result[i + j] %= 10
+        while len(result) > 1 and result[-1] == 0:
+            result.pop()
+        return "".join(map(str, result[::-1]))

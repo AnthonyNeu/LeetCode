@@ -117,3 +117,24 @@ class Solution:
                     
                 cur = cur.next
             head = next_head
+
+# recursion version
+class Solution(object):
+    def connect(self, root):
+        """
+        :type root: TreeLinkNode
+        :rtype: nothing
+        """
+        if root is None:
+            return
+        dummy = TreeLinkNode(-1)
+        prev, cur = dummy, root
+        while cur:
+            if cur.left:
+                prev.next = cur.left
+                prev = prev.next
+            if cur.right:
+                prev.next = cur.right
+                prev = prev.next
+            cur = cur.next
+        self.connect(dummy.next)

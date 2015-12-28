@@ -30,4 +30,3 @@ class Solution(object):
             result ^= i
             result ^= nums[i]
         return result
-        

@@ -51,9 +51,8 @@ class Trie:
             else:
                 return False
         return True
-        
+
 # Your Trie object will be instantiated and called as such:
 # trie = Trie()
 # trie.insert("somestring")
 # trie.search("key")
-

@@ -28,10 +28,10 @@ class Solution:
                         slope_count[slope] = 1
                     else:
                         slope_count[slope] += 1
-                        
+
             for slope in slope_count:
                 current_max = max(current_max, slope_count[slope] + same)
-                
+
             max_points = max(max_points, current_max, same)
-            
+
         return max_points

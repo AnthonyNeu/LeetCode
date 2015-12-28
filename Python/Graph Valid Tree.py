@@ -22,7 +22,7 @@ class Solution(object):
         :rtype: bool
         """
         if len(edges) != n - 1: return False
-        
+
         neighbors, visit_from = {}, {}
         for i in range(n):
             visit_from[i] = -1
@@ -30,7 +30,7 @@ class Solution(object):
         for edge in edges:
             neighbors[edge[0]].append(edge[1])
             neighbors[edge[1]].append(edge[0])
-        
+
         # BFS
         visited = {}
         q = collections.deque()

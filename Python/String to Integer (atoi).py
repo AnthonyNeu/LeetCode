@@ -16,32 +16,35 @@ If the first sequence of non-whitespace characters in str is not a valid integra
 If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.
 """
 
-class Solution:
-    # @return an integer
-    def atoi(self, str):
-        i = 0
-        M = len(str)
-        if M == 0:
+class Solution(object):
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        s = str.strip()
+        max_int_prefix, min_int_prefix = 214748364, -214748364
+        max_int, min_int = 2147483647, -2147483648
+        if not s:
             return 0
-        sign = 1
-        while i < M and str[i] is ' ':
-            i+=1
-        if str[i] is '-' or str[i] is '+' or str[i].isdigit() is True:
-            if str[i] == '-':
-                sign = -1
-                i +=1
-            elif str[i] == '+':
-                i+=1
-            tmp = ''
-            while i < M and str[i].isdigit():
-                tmp += str[i]
-                i +=1
-            N = len(tmp)
-            if N == 0:
-                return 0
-            else:
-                result = 0
-                for i in range(N):
-                    result = ord(tmp[i]) - ord('0') + result *10
-                return max(min(result * sign, 2147483647), -2147483648)
-        return 0
+        idx, sign = 0, 1
+        if s[0] == '-' or s[0] == '+':
+            sign = 1 if s[0] == '+' else -1
+            idx += 1
+        tmp = ''
+        while idx < len(s) and s[idx].isdigit():
+            tmp += s[idx]
+            idx += 1
+        if len(tmp) == 0:
+            return 0
+        result = 0
+        for i in range(len(tmp)):
+            result = ord(tmp[i]) - ord('0') + result * 10
+            if i < len(tmp) - 1 and (sign * result > max_int_prefix or sign * result < min_int_prefix):
+                return max_int if sign == 1 else min_int
+            if i == len(tmp) - 2:
+                if sign * result == max_int_prefix and int(tmp[i + 1]) > 7:
+                    return max_int
+                elif sign * result == min_int_prefix and int(tmp[i + 1]) > 8:
+                    return min_int
+        return sign * result

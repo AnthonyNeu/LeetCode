@@ -12,7 +12,7 @@ class Solution:
     # @return an integer
     def evalRPN(self, tokens):
         stack = []
-        
+
         for token in tokens:
             if len(stack) == 0:
                 stack.append(token)

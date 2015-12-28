@@ -29,3 +29,21 @@ class Solution:
                 k %= fact
                 fact/=i
         return result
+
+class Solution:
+    """
+    @param n: n
+    @param k: the k-th permutation
+    @return: a string, the k-th permutation
+    """
+    def getPermutation(self, n, k):
+        factorial = [1 for i in range(n + 1)]
+        for i in range(1, n + 1):
+            factorial[i] = factorial[i - 1] * i
+        array = range(1, n + 1)
+        k = (k % factorial[n]) - 1
+        permutation = []
+        for i in xrange(n - 1, -1, -1):
+            idx, k = divmod(k, factorial[i])
+            permutation.append(array.pop(idx))
+        return "".join(map(str, permutation))

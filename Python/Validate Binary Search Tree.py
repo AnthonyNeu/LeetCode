@@ -39,7 +39,7 @@ class Solution:
     prev = None
     def isValidBST(self, root):
         return self.isValidBSTHelper(root,self.prev)
-    
+
     def isValidBSTHelper(self,root,prev):
         if root is None:
             return True

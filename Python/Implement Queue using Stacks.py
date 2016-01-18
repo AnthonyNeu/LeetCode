@@ -23,19 +23,18 @@ class Queue:
         if self.empty():
             self.front = x
         self.s.append(x)
-        
+
     # @return nothing
     def pop(self):
         cur = []
         for _ in xrange(len(self.s) - 1):
             cur.append(self.s[-1])
-            self.front = cur[-1] 
+            self.front = cur[-1]
             self.s.pop()
         self.s.pop()
         for _ in xrange(len(cur)):
             self.s.append(cur[-1])
             cur.pop()
-        
 
     # @return an integer
     def peek(self):

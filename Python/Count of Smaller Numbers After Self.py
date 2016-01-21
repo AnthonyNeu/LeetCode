@@ -66,7 +66,7 @@ class Solution(object):
             else:
                 right_sum = self.query(root.right, start, end)
         return left_sum + right_sum
-        
+
     def modify(self, root, index, value):
         # write your code here
         if root.start == index and root.end == index:
@@ -101,20 +101,20 @@ class Solution(object):
             result[i] = self.query(move[i] - 1)
             self.add(move[i], 1)
         return result
-        
+
     def add(self, idx, value):
         i = idx
         while i < len(self.BITree):
             self.BITree[i] += value
             i += i& (-i)
-    
+
     def query(self, idx):
         result, i = 0, idx
         while i > 0:
             result += self.BITree[i]
             i -= i & (-i)
         return result
-    
+
     def searchInsert(self, A, target):
         if A is None or len(A) == 0:
             return 0
